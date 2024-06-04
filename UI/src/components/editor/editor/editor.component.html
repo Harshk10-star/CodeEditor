@@ -1,1 +1,5 @@
-<p>editor works!</p>
+<div class="editor-container">
+    <textarea [(ngModel)]="code" (ngModelChange)="onCodeChange($event)" class="code-input"></textarea>
+    <pre class="code-output"><code [innerHTML]="highlightedCode" class="language-javascript"></code></pre>
+  </div>
+  
