@@ -13,12 +13,17 @@ export class EditorComponent implements OnInit {
     this.highlightCode();
   }
 
-  onCodeChange(value: string): void {
-    this.code = value;
+  onCodeChange(event: Event): void {
+    const inputElement = event.target as HTMLTextAreaElement;
+    this.code = inputElement.value;
     this.highlightCode();
   }
 
   highlightCode(): void {
     this.highlightedCode = Prism.highlight(this.code, Prism.languages['javascript'], 'javascript');
+  }
+
+  runCode() {
+    console.log(this.code);
   }
 }
