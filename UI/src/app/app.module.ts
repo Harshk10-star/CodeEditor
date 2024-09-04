@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ShoppingListModule } from '../components/shoppinglist/shopping-list/shopping-list.module'
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     CodeEditorModule,
     LoginModule,
     ReactiveFormsModule,
+    ShoppingListModule,
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })

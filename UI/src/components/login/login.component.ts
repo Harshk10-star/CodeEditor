@@ -6,14 +6,16 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+  inputValue: string = '';
+
   loginForm: FormGroup = new FormGroup({
-    username: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    password: new FormControl('',[Validators.required, Validators.minLength(6)])
+    username: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    password: new FormControl('',[Validators.required, Validators.minLength(1)])
   })
-  
+
   onSubmit(): void {
     if(this.loginForm.valid) {
-      //login
+      console.log("valid");
       
     }
   }
