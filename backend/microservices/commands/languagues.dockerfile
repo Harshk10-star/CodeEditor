@@ -17,8 +17,18 @@ RUN apt-get update && apt-get install -y \
     make \
     && apt-get clean
 
+# Install Go dependencies
+RUN go install github.com/gin-gonic/gin@latest
+
 # Copy the current directory contents into the container at /usr/src/app
 COPY . .
 
-# Default command to keep the container running
-CMD tail -f /dev/null
+# Build the Go application
+RUN go build -o server .
+
+# Expose the port the server will run on
+EXPOSE 8080
+
+# Default command to run the Go application
+CMD ["./server"]
+

@@ -16,7 +16,6 @@ func main() {
 	router.POST("/lang/run", runCode)
 	router.Run("localhost:8080")
 }
-
 func runCode(c *gin.Context) {
 	// Get code from request
 	var requestBody struct {
@@ -28,7 +27,7 @@ func runCode(c *gin.Context) {
 		return
 	}
 
-	// Save the code to a file with appropriate extension
+	// Save the code to a file with the appropriate extension
 	codeFile := filepath.Join("/tmp", fmt.Sprintf("code.%s", getFileExtension(requestBody.Language)))
 	err := os.WriteFile(codeFile, []byte(requestBody.Code), 0644)
 	if err != nil {
@@ -36,12 +35,16 @@ func runCode(c *gin.Context) {
 		return
 	}
 
-	// Run the Docker container with the code file
-	cmd := exec.Command("docker", "run", "--rm", "-v", fmt.Sprintf("%s:/usr/src/app/code.%s", codeFile, getFileExtension(requestBody.Language)), "your_docker_image_name", getRunCommand(requestBody.Language))
+	// Construct the command to run the code file
+	runCommand := getRunCommand(requestBody.Language)
+
+	// Execute the command using exec.Command
+	cmd := exec.Command("bash", "-c", runCommand)
 	var out bytes.Buffer
 	cmd.Stdout = &out
 	cmd.Stderr = &out
 
+	// Run the command and capture the output
 	err = cmd.Run()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to run code", "details": out.String()})
